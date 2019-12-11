@@ -28,18 +28,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime selected = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
-      lastDate: DateTime(2020),
+  DateTime _date = new DateTime.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: new DateTime(2016),
+        lastDate: new DateTime.now().add(new Duration(days: 360))
     );
-    if (selected != null) {
-      setState(() {
-        _labelText = (DateFormat.yMMMd()).format(selected);
-      });
-    }
+    if(picked != null) setState(() => _date = picked);
   }
 
   @override
@@ -83,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Text("追加"),
         color: Colors.orange,
         textColor: Colors.white,
-        onPressed: () {},
+        onPressed: () => _selectDate(context), 
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
