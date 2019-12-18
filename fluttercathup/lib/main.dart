@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,12 +9,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'バイト給料計算機',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'バイト給料計算機'),
     );
+
   }
 }
 
@@ -26,6 +28,15 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+class MyInputPage extends StatefulWidget {
+  MyInputPage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyInputPageState createState() => _MyInputPageState();
+}
+
 class _MyHomePageState extends State<MyHomePage> {
 
   DateTime _date = new DateTime.now();
@@ -34,10 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: _date,
-        firstDate: new DateTime(2016),
+        firstDate: new DateTime(2018),
         lastDate: new DateTime.now().add(new Duration(days: 360))
     );
-    if(picked != null) setState(() => _date = picked);
+    if(picked != null) {
+      setState(() => _date = picked );
+      Navigator.push(
+        context,
+        new MaterialPageRoute<Null>(
+          settings: const RouteSettings(name: "/my-page-2"),
+          builder: (BuildContext context) => MyInputPage(/* 必要なパラメータがあればここで渡す */), fullscreenDialog: true
+        ),
+      );
+    }
+
   }
 
   @override
@@ -52,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('バイト給料計算機'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -81,8 +102,54 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Text("追加"),
         color: Colors.orange,
         textColor: Colors.white,
-        onPressed: () => _selectDate(context), 
+        onPressed: () => _selectDate(context),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class _MyInputPageState extends State<MyInputPage> {
+
+  String taskText;
+
+  @override
+  Widget build(BuildContext context) {
+
+    var _text;
+
+    void _handleText(String e) {
+      setState(() {
+        _text = e;
+      });
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text('バイト給料計算機'),
+      ),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          new TextField(
+          enabled: true,
+          maxLength: 10,
+          maxLengthEnforced: false,
+          obscureText: false,
+          onChanged: _handleText,
+            decoration: const InputDecoration(
+              labelText: '8時間を超えずに行った5時~22時の労働時間',
+            ),
+          )
+        ],
+        ),
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
