@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   DateTime _date = new DateTime.now();
 
-  String pay;
+  int pay;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -54,12 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() => _date = picked );
       final result = await Navigator.push(
         context,
-        new MaterialPageRoute<Null>(
-          builder: (context) => MyInputPage(/* 必要なパラメータがあればここで渡す */),
-          fullscreenDialog: true
-        ),
+        new MaterialPageRoute(builder: (context) => MyInputPage()),
       );
-      pay = '$result';
+      pay = result;
     }
 
   }
@@ -140,12 +137,13 @@ class _MyInputPageState extends State<MyInputPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
           new TextField(
-          enabled: true,
-          maxLength: 10,
-          maxLengthEnforced: false,
-          obscureText: false,
+            keyboardType: TextInputType.number,
+            enabled: true,
+            maxLength: 10,
+            maxLengthEnforced: false,
+            obscureText: false,
             onChanged: (text) {
-              this.wages = text;
+              wages = text;
             },
             decoration: const InputDecoration(
               labelText: '8時間を超えずに行った5時~22時の労働時間',
