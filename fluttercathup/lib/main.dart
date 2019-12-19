@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title,String wages}) : super(key: key);
 
   final String title;
 
@@ -41,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   DateTime _date = new DateTime.now();
 
+  String pay;
+
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -50,13 +52,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     if(picked != null) {
       setState(() => _date = picked );
-      Navigator.push(
+      final result = await Navigator.push(
         context,
         new MaterialPageRoute<Null>(
-          settings: const RouteSettings(name: "/my-page-2"),
-          builder: (BuildContext context) => MyInputPage(/* 必要なパラメータがあればここで渡す */), fullscreenDialog: true
+          builder: (context) => MyInputPage(/* 必要なパラメータがあればここで渡す */),
+          fullscreenDialog: true
         ),
       );
+      pay = '$result';
     }
 
   }
@@ -110,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class _MyInputPageState extends State<MyInputPage> {
 
-  String taskText;
+  var wages;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +144,9 @@ class _MyInputPageState extends State<MyInputPage> {
           maxLength: 10,
           maxLengthEnforced: false,
           obscureText: false,
-          onChanged: _handleText,
+            onChanged: (text) {
+              this.wages = text;
+            },
             decoration: const InputDecoration(
               labelText: '8時間を超えずに行った5時~22時の労働時間',
             ),
@@ -149,6 +154,16 @@ class _MyInputPageState extends State<MyInputPage> {
         ],
         ),
       ),
+      floatingActionButton: RaisedButton(
+        child: Text("追加"),
+        color: Colors.orange,
+        textColor: Colors.white,
+        onPressed :() {
+          Navigator.pop(
+            context,wages
+          );
+          }
+      ), // This trailing comma makes auto-formatting nicer for build methods.
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
