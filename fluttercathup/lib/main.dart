@@ -39,27 +39,21 @@ class MyInputPage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  DateTime _date = new DateTime.now();
-
-  int pay;
+  num pay = 0; //初期給料額
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: _date,
-        firstDate: new DateTime(2018),
-        lastDate: new DateTime.now().add(new Duration(days: 360))
-    );
-    if(picked != null) {
-      setState(() => _date = picked );
+
       final result = await Navigator.push(
         context,
-        new MaterialPageRoute(builder: (context) => MyInputPage()),
+        new MaterialPageRoute(builder: (context) => new MyInputPage()), //MyInputPageに移動
       );
-      pay = result;
-    }
 
+      setState(() {
+        pay = pay + result; //MyInputPageからwagesを受け取る
+      });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              "お給料の合計は" +'$pay' + "円です",
+              style: Theme.of(context).textTheme.display1,
+            ),
           ],
         ),
       ),
@@ -112,16 +110,15 @@ class _MyInputPageState extends State<MyInputPage> {
 
   var wages;
 
+  var changeper;
+
+  var changehour;
+
   @override
   Widget build(BuildContext context) {
 
-    var _text;
 
-    void _handleText(String e) {
-      setState(() {
-        _text = e;
-      });
-    }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -136,6 +133,26 @@ class _MyInputPageState extends State<MyInputPage> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+
+              '$wages'
+            ),
+            new TextField(
+              keyboardType: TextInputType.number,
+              enabled: true,
+              maxLength: 10,
+              maxLengthEnforced: false,
+              obscureText: false,
+              onChanged: (text) {
+                changeper = double.parse(text.toString());
+                setState(() {
+                  wages = changeper*changehour ;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: '時給',
+              ),
+            ),
           new TextField(
             keyboardType: TextInputType.number,
             enabled: true,
@@ -143,10 +160,13 @@ class _MyInputPageState extends State<MyInputPage> {
             maxLengthEnforced: false,
             obscureText: false,
             onChanged: (text) {
-              wages = text;
+              changehour = double.parse(text.toString());
+              setState(() {
+                wages = changeper*changehour;
+              });
             },
             decoration: const InputDecoration(
-              labelText: '8時間を超えずに行った5時~22時の労働時間',
+              labelText: '労働時間',
             ),
           )
         ],
@@ -157,9 +177,7 @@ class _MyInputPageState extends State<MyInputPage> {
         color: Colors.orange,
         textColor: Colors.white,
         onPressed :() {
-          Navigator.pop(
-            context,wages
-          );
+          Navigator.pop(context,wages);
           }
       ), // This trailing comma makes auto-formatting nicer for build methods.
       // This trailing comma makes auto-formatting nicer for build methods.
