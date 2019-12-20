@@ -17,7 +17,7 @@
 
 ##使用画面
 
-(img/画面1.png)
-(img/画面2.png)
-(img/画面3.png)
+!(img/画面1.png)
+!(img/画面2.png)
+!(img/画面3.png)
 
