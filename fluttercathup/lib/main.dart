@@ -110,15 +110,18 @@ class _MyInputPageState extends State<MyInputPage> {
 
   var wages;
 
-  var changeper;
+  var per = 0.0;
 
-  var changehour;
+  var u8822 = 0.0;
+
+  var o8822 = 0.0;
+
+  var u8225 = 0.0;
+
+  var o8225 = 0.0;
 
   @override
   Widget build(BuildContext context) {
-
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -144,9 +147,9 @@ class _MyInputPageState extends State<MyInputPage> {
               maxLengthEnforced: false,
               obscureText: false,
               onChanged: (text) {
-                changeper = double.parse(text.toString());
+                per = double.parse(text.toString());
                 setState(() {
-                  wages = changeper*changehour ;
+                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5) ;
                 });
               },
               decoration: const InputDecoration(
@@ -160,15 +163,63 @@ class _MyInputPageState extends State<MyInputPage> {
             maxLengthEnforced: false,
             obscureText: false,
             onChanged: (text) {
-              changehour = double.parse(text.toString());
+              u8822= double.parse(text.toString());
               setState(() {
-                wages = changeper*changehour;
+                wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
               });
             },
             decoration: const InputDecoration(
-              labelText: '労働時間',
+              labelText: '8時間を超えずに行った8~22時の労働時間',
             ),
-          )
+          ),
+            new TextField(
+              keyboardType: TextInputType.number,
+              enabled: true,
+              maxLength: 10,
+              maxLengthEnforced: false,
+              obscureText: false,
+              onChanged: (text) {
+                o8822 = double.parse(text.toString());
+                setState(() {
+                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: '8時間を超えて行った8~22時の労働時間',
+              ),
+            ),
+            new TextField(
+              keyboardType: TextInputType.number,
+              enabled: true,
+              maxLength: 10,
+              maxLengthEnforced: false,
+              obscureText: false,
+              onChanged: (text) {
+                u8225 = double.parse(text.toString());
+                setState(() {
+                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: '8時間を超えずに行った22~5時の労働時間',
+              ),
+            ),
+            new TextField(
+              keyboardType: TextInputType.number,
+              enabled: true,
+              maxLength: 10,
+              maxLengthEnforced: false,
+              obscureText: false,
+              onChanged: (text) {
+                o8225 = double.parse(text.toString());
+                setState(() {
+                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: '8時間を超えて行った22~5時の労働時間',
+              ),
+            )
         ],
         ),
       ),
