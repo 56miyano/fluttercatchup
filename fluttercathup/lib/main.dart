@@ -54,7 +54,7 @@ class _MyWageState extends State<MyWage> {
         new MaterialPageRoute(builder: (context) => new InputPage()), //MyInputPageに移動
       );
       resultAddDailySalaryList = result.toString();
-      dailySalaryList.add(resultAddDailySalaryList);
+      dailySalaryList.add(dateToAdd + "　　　" +resultAddDailySalaryList);
       setState(() {
         pay = pay + result; //MyInputPageからwagesを受け取る
       });
@@ -70,7 +70,7 @@ class _MyWageState extends State<MyWage> {
         itemCount: dailySalaryList.length,
         itemBuilder: (context, int index) {
           return new Text(
-            dateToAdd + "　　　" + dailySalaryList[index] + "円",
+            dailySalaryList[index] + "円",
           );
       },
       ),
