@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'input.dart';
 
 void main() => runApp(MyApp());
@@ -33,13 +33,23 @@ class _MyWageState extends State<MyWage> {
 
   num pay = 0; //初期給料額
 
-  String resultAddDailySalaryList = 'あ';
+  String resultAddDailySalaryList ;
+
+  String dateToAdd;
 
   List<String> dailySalaryList = []; //追加した給料
 
   Future<Null> _selectDate(BuildContext context) async {
-
-      final result = await Navigator.push(
+    final DateTime selected = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime(2020),
+    );
+    if (selected != null) {
+      dateToAdd = (DateFormat.yMMMd()).format(selected);
+    }
+    final result = await Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => new InputPage()), //MyInputPageに移動
       );
@@ -60,7 +70,7 @@ class _MyWageState extends State<MyWage> {
         itemCount: dailySalaryList.length,
         itemBuilder: (context, int index) {
           return new Text(
-          dailySalaryList[index],
+            dateToAdd + "　　　" + dailySalaryList[index] + "円",
           );
       },
       ),
