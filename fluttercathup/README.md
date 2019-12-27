@@ -10,7 +10,7 @@
 
 |変数名  |変数型  |役割  |
 |---|---|---|
-|pay|double|MyWage上に表示される合計の給料額|
+||double|MyWage上に表示される合計の給料額|
 |dailySalary|double  |日給 InputPageの上に表示される数字であり、かつMyHomePageに渡す値|
 |hourlyWage|double|時給　時給を入力したテキストを小数型に変える|
 |under8hFrom8to22|double|8時間を超えずに行った8~22時の労働時間を入力したテキストを小数型に変える 給与計算時に1倍される|

@@ -10,9 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'バイト給料計算機',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       home: MyWage(title: 'バイト給料計算機'),
     );
@@ -70,8 +71,11 @@ class _MyWageState extends State<MyWage> {
         child: ListView.builder(
         itemCount: dailySalaryList.length,
         itemBuilder: (context, int index) {
-          return new Text(
-            dailySalaryList[index] + "円",
+          return Card(
+            color: Colors.yellow,
+            child :Text(
+              dailySalaryList[index] + "円",
+            ),
           );
          },
         ),
