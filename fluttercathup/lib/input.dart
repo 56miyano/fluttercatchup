@@ -14,17 +14,17 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
 
-  var wages;
+  double dailySalary = 0;
 
-  var per = 0.0;
+  double hourlyWage  = 0.0;
 
-  var u8822 = 0.0;
+  double under8hFrom8to22 = 0.0;
 
-  var o8822 = 0.0;
+  double over8hFrom8to22 = 0.0;
 
-  var u8225 = 0.0;
+  double under8hFrom22to5 = 0.0;
 
-  var o8225 = 0.0;
+  double over8hFrom22to5 = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,7 @@ class _InputPageState extends State<InputPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-
-              '$wages'
+              '$dailySalary'
             ),
             new TextField(
               keyboardType: TextInputType.number,
@@ -49,9 +48,9 @@ class _InputPageState extends State<InputPage> {
               maxLengthEnforced: false,
               obscureText: false,
               onChanged: (text) {
-                per = double.parse(text.toString());
+                hourlyWage  = double.parse(text.toString());
                 setState(() {
-                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5) ;
+                  dailySalary = hourlyWage*(under8hFrom8to22+over8hFrom8to22*1.25+under8hFrom22to5*1.25+over8hFrom22to5*1.5) ;
                 });
               },
               decoration: const InputDecoration(
@@ -65,10 +64,7 @@ class _InputPageState extends State<InputPage> {
             maxLengthEnforced: false,
             obscureText: false,
             onChanged: (text) {
-              u8822= double.parse(text.toString());
-              setState(() {
-                wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
-              });
+              under8hFrom8to22= double.parse(text.toString());
             },
             decoration: const InputDecoration(
               labelText: '8時間を超えずに行った8~22時の労働時間',
@@ -81,10 +77,7 @@ class _InputPageState extends State<InputPage> {
               maxLengthEnforced: false,
               obscureText: false,
               onChanged: (text) {
-                o8822 = double.parse(text.toString());
-                setState(() {
-                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
-                });
+                over8hFrom8to22 = double.parse(text.toString());
               },
               decoration: const InputDecoration(
                 labelText: '8時間を超えて行った8~22時の労働時間',
@@ -97,10 +90,7 @@ class _InputPageState extends State<InputPage> {
               maxLengthEnforced: false,
               obscureText: false,
               onChanged: (text) {
-                u8225 = double.parse(text.toString());
-                setState(() {
-                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
-                });
+                under8hFrom8to22 = double.parse(text.toString());
               },
               decoration: const InputDecoration(
                 labelText: '8時間を超えずに行った22~5時の労働時間',
@@ -113,10 +103,7 @@ class _InputPageState extends State<InputPage> {
               maxLengthEnforced: false,
               obscureText: false,
               onChanged: (text) {
-                o8225 = double.parse(text.toString());
-                setState(() {
-                  wages = per*(u8822+o8822*1.25+u8225*1.25+o8225*1.5);
-                });
+                over8hFrom22to5 = double.parse(text.toString());
               },
               decoration: const InputDecoration(
                 labelText: '8時間を超えて行った22~5時の労働時間',
@@ -130,7 +117,7 @@ class _InputPageState extends State<InputPage> {
         color: Colors.orange,
         textColor: Colors.white,
         onPressed :() {
-          Navigator.pop(context,wages);
+          Navigator.pop(context,dailySalary);
           }
       ),
     );
