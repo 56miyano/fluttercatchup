@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'input.dart';
 
 void main() => runApp(MyApp());
@@ -31,13 +32,13 @@ class MyWage extends StatefulWidget {
 
 class _MyWageState extends State<MyWage> {
 
-  num pay = 0; //初期給料額
+  num totalFee = 0;
 
   String resultAddDailySalaryList ;
 
   String dateToAdd;
 
-  List<String> dailySalaryList = []; //追加した給料
+  List<String> dailySalaryList = [];
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime selected = await showDatePicker(
@@ -47,17 +48,16 @@ class _MyWageState extends State<MyWage> {
       lastDate: DateTime(2020),
     );
     if (selected != null) {
-      dateToAdd = (DateFormat.yMMMd()).format(selected);
+      initializeDateFormatting('ja');
+      dateToAdd = (DateFormat.yMMMd('ja')).format(selected);
     }
     final result = await Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => new InputPage()), //MyInputPageに移動
       );
+    totalFee = totalFee + result;
       resultAddDailySalaryList = result.toString();
-      dailySalaryList.add(dateToAdd + "　　　" +resultAddDailySalaryList);
-      setState(() {
-        pay = pay + result; //MyInputPageからwagesを受け取る
-      });
+      dailySalaryList.add(dateToAdd + "の給料　　" +resultAddDailySalaryList +"円　　合計金額　　" + '$totalFee');
   }
 
   @override
@@ -66,14 +66,16 @@ class _MyWageState extends State<MyWage> {
       appBar: AppBar(
         title: Text('バイト給料計算機'),
       ),
-      body: ListView.builder(
+      body: Center(
+        child: ListView.builder(
         itemCount: dailySalaryList.length,
         itemBuilder: (context, int index) {
           return new Text(
             dailySalaryList[index] + "円",
           );
-      },
-      ),
+         },
+        ),
+    ),
       floatingActionButton: RaisedButton(
         child: Text(('追加')),
         color: Colors.orange,
