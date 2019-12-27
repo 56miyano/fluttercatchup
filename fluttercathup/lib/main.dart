@@ -50,14 +50,15 @@ class _MyWageState extends State<MyWage> {
     if (selected != null) {
       initializeDateFormatting('ja');
       selectedDate = (DateFormat.yMMMd('ja')).format(selected);
-    }
-    final result = await Navigator.push(
+      final result = await Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => new InputPage()), //MyInputPageに移動
       );
-    totalFee = totalFee + result;
+      totalFee = totalFee + result;
       stringResult = result.toString();
       dailySalaryList.add(selectedDate + "の給料　　" +stringResult +"円　　合計金額　　" + '$totalFee');
+    }
+
   }
 
   @override
