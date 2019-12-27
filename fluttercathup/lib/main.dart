@@ -30,16 +30,15 @@ class MyWage extends StatefulWidget {
   _MyWageState createState() => _MyWageState();
 }
 
-
 class _MyWageState extends State<MyWage> {
 
-  num totalFee = 0;
-
-  String resultAddDailySalaryList ;
-
-  String dateToAdd;
+  double totalFee = 0;
 
   List<String> dailySalaryList = [];
+
+  String stringResult ;
+
+  String selectedDate;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime selected = await showDatePicker(
@@ -50,15 +49,15 @@ class _MyWageState extends State<MyWage> {
     );
     if (selected != null) {
       initializeDateFormatting('ja');
-      dateToAdd = (DateFormat.yMMMd('ja')).format(selected);
+      selectedDate = (DateFormat.yMMMd('ja')).format(selected);
     }
     final result = await Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => new InputPage()), //MyInputPageに移動
       );
     totalFee = totalFee + result;
-      resultAddDailySalaryList = result.toString();
-      dailySalaryList.add(dateToAdd + "の給料　　" +resultAddDailySalaryList +"円　　合計金額　　" + '$totalFee');
+      stringResult = result.toString();
+      dailySalaryList.add(selectedDate + "の給料　　" +stringResult +"円　　合計金額　　" + '$totalFee');
   }
 
   @override
@@ -89,4 +88,3 @@ class _MyWageState extends State<MyWage> {
     );
   }
 }
-
