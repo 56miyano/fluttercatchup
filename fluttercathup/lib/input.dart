@@ -3,7 +3,16 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'main.dart';
 
-class _MyInputPageState extends State<MyInputPage> {
+class InputPage extends StatefulWidget {
+  InputPage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _InputPageState createState() => _InputPageState();
+}
+
+class _InputPageState extends State<InputPage> {
 
   var wages;
 

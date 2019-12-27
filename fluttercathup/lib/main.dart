@@ -14,31 +14,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'バイト給料計算機'),
+      home: MyWage(title: 'バイト給料計算機'),
     );
 
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title,String wages}) : super(key: key);
+class MyWage extends StatefulWidget {
+  MyWage({Key key, this.title,String wages}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyWageState createState() => _MyWageState();
 }
 
-class MyInputPage extends StatefulWidget {
-  MyInputPage({Key key, this.title}) : super(key: key);
 
-  final String title;
-
-  @override
-  _MyInputPageState createState() => _MyInputPageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _MyWageState extends State<MyWage> {
 
   num pay = 0; //初期給料額
 
@@ -46,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       final result = await Navigator.push(
         context,
-        new MaterialPageRoute(builder: (context) => new MyInputPage()), //MyInputPageに移動
+        new MaterialPageRoute(builder: (context) => new InputPage()), //MyInputPageに移動
       );
 
       setState(() {
@@ -91,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "お給料の合計は" +'$pay' + "円です",
+              "お給料の合計は" +'$pay' + "円です" + "テスト",
               style: Theme.of(context).textTheme.display1,
             ),
           ],
