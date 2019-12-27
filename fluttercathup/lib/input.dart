@@ -31,13 +31,9 @@ class _InputPageState extends State<InputPage> {
 
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text('バイト給料計算機'),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
 
           mainAxisAlignment: MainAxisAlignment.center,
@@ -136,8 +132,7 @@ class _InputPageState extends State<InputPage> {
         onPressed :() {
           Navigator.pop(context,wages);
           }
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-      // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
