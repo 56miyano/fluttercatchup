@@ -33,19 +33,22 @@ class _MyWageState extends State<MyWage> {
 
   num pay = 0; //初期給料額
 
+  String resultAddDailySalaryList = 'あ';
+
+  List<String> dailySalaryList = []; //追加した給料
+
   Future<Null> _selectDate(BuildContext context) async {
 
       final result = await Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => new InputPage()), //MyInputPageに移動
       );
-
+      resultAddDailySalaryList = result.toString();
+      dailySalaryList.add(resultAddDailySalaryList);
       setState(() {
         pay = pay + result; //MyInputPageからwagesを受け取る
       });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,19 +56,16 @@ class _MyWageState extends State<MyWage> {
       appBar: AppBar(
         title: Text('バイト給料計算機'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "お給料の合計は" +'$pay' + "円です" + "テスト",
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+      body: ListView.builder(
+        itemCount: dailySalaryList.length,
+        itemBuilder: (context, int index) {
+          return new Text(
+          dailySalaryList[index],
+          );
+      },
       ),
       floatingActionButton: RaisedButton(
-        child: Text("追加"),
+        child: Text(('追加')),
         color: Colors.orange,
         textColor: Colors.white,
         onPressed: () => _selectDate(context),
