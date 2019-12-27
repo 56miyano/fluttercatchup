@@ -14,7 +14,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
 
-  double dailySalary = 0;
+  double dailySalary = 0.0;
 
   double hourlyWage  = 0.0;
 
@@ -125,7 +125,21 @@ class _InputPageState extends State<InputPage> {
         color: Colors.orange,
         textColor: Colors.white,
         onPressed :() {
-          Navigator.pop(context,dailySalary);
+          double handOverMyWage = dailySalary;
+
+          dailySalary = 0.0;
+
+          hourlyWage  = 0.0;
+
+          under8hFrom8to22 = 0.0;
+
+          over8hFrom8to22 = 0.0;
+
+          under8hFrom22to5 = 0.0;
+
+          over8hFrom22to5 = 0.0;
+
+          Navigator.pop(context,handOverMyWage);
           }
       ),
     );
